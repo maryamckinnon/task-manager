@@ -1,10 +1,17 @@
-{% extends 'base.html' %}{% block content %}
-<main>
-    <div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tracker</title>
+  </head>
+  <body>
+    <main>
+      <div>
         <h1>Login</h1>
         <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button>Login</button>
+          {% csrf_token %}{{ form.as_p }}
+          <button>Login</button>
         </form>
-</main>
-{% endblock content %}
+      </div>
+    </main>
+  </body>
+</html>
