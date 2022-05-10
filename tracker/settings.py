@@ -28,7 +28,6 @@ SECRET_KEY = (
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost"]
-LOGIN_REDIRECT_URL = "home"
 
 
 # Application definition
