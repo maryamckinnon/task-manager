@@ -23,4 +23,5 @@ urlpatterns = [
     path(
         "", RedirectView.as_view(url=reverse_lazy("project_list")), name="home"
     ),
+    path("accounts/", include("accounts.urls")),
 ]
