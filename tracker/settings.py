@@ -35,6 +35,7 @@ LOGOUT_REDIRECT_URL = "login"
 # Application definition
 
 INSTALLED_APPS = [
+    "markdownify.apps.MarkdownifyConfig",
     "tasks.apps.TasksConfig",
     "projects.apps.ProjectsConfig",
     "accounts.apps.AccountsConfig",
@@ -75,6 +76,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "tracker.wsgi.application"
+
+MARKDOWNIFY = {"default": {"BLEACH": False}}
 
 
 # Database
