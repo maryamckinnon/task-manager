@@ -1,42 +1,59 @@
 {% extends 'base.html' %} {% load markdownify %} {% block content %}
-    <main>
-        <div>
-            <h1>{{ project.name }}</h1>
-            {{ project.description|markdownify }}
-            <h2>Tasks</h2>
-            <p>
-                <a href="{% url 'create_task' %}">Create a new task</a>
-            </p>
-            {% if project.tasks.all|length == 0 %}
-                <p>This project has no tasks</p>
-            {% else %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Assignee</th>
-                            <th>Start date</th>
-                            <th>Due date</th>
-                            <th>Is completed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for task in project.tasks.all %}
-                            <tr>
-                                <td>{{ task.name }}</td>
-                                <td>{{ task.assignee }}</td>
-                                <td>{{ task.start_date }}</td>
-                                <td>{{ task.due_date }}</td>
-                                {% if task.is_complete == True %}
-                                    <td>yes</td>
-                                {% else %}
-                                    <td>no</td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
-        </div>
-    </main>
+<main>
+  <div>
+    <h1>{{ project.name }}</h1>
+    {{ project.description|markdownify }}
+    <h2>Tasks</h2>
+    {% if project.tasks.all|length == 0 %}
+    <p>This project has no tasks</p>
+    {% else %}
+    <table class="task_table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Assignee</th>
+          <th>Start date</th>
+          <th>Due date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in project.tasks.all %}
+        <tr>
+          {% if task.is_complete == True %}
+          <td>&#10004;</td>
+          {% else %}
+          <td>
+            <form method="post" action="{% url 'complete_task' task.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="is_completed" value="True" />
+              <button class="task_complete">&#10004;</button>
+            </form>
+          </td>
+          <td><a href="{% url 'task_detail' task.id %}">{{ task.name }}</a></td>
+          <td>{{ task.assignee }}</td>
+          <td>{{ task.start_date }}</td>
+          <td>{{ task.due_date }}</td>
+
+          <td>
+            <form method="post" action="{% url 'delete_task' task.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="delete_task" value="True" />
+              <button class="task_delete">X</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <div>
+      <p>
+        <a href="{% url 'create_task' %}">
+        <button class="task_create">+ PROJECT</button></a>
+      </p>
+  </div>
+</main>
 {% endblock content %}

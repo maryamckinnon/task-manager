@@ -19,6 +19,8 @@ class Task(models.Model):
         related_name="tasks",
         on_delete=models.SET_NULL,
     )
+    description = models.CharField(max_length=200, null=True, blank=True)
+    notes = models.CharField(max_length=400, null=True, blank=True)
 
     def __str__(self):
         return self.name
